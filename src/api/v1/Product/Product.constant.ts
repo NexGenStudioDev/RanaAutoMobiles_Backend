@@ -1,4 +1,4 @@
-export let Product_Constant = {
+export const Product_Constant = {
   PRODUCT_CREATED: 'Product created successfully',
   PRODUCT_CREATION_FAILED: 'Product creation failed',
   PRODUCT_UPDATED: 'Product updated successfully',

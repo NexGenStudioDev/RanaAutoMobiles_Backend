@@ -20,12 +20,12 @@ const whitelist = [
 
 export const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
-    console.log('CORS Origin:', origin);
-    if (!origin) {
+    const originIsAllowed = !origin || whitelist.includes(origin);
+    if (originIsAllowed) {
+      callback(null, true);
+    } else {
       callback(new Error('Not allowed by CORS'));
     }
-
-    callback(null, true); // Allow the request
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],

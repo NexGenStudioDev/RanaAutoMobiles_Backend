@@ -17,7 +17,7 @@ const FlagSchema = zod.object({
   icon: zod.string().optional(),
 });
 
-export let Product_Validator = zod
+export const Product_Validator = zod
   .object({
     name: zod
       .string()
@@ -46,7 +46,7 @@ export let Product_Validator = zod
     category: zod.string().min(1, 'Category is required'),
     tags: zod.array(zod.string()).optional().default([]),
     flags: zod.array(FlagSchema).optional().default([]),
-    isActive: zod.boolean().default(true),
-    isFeatured: zod.boolean().default(false),
   })
   .strict();
+
+  export type ProductInput = zod.infer<typeof Product_Validator>;

@@ -1,8 +1,9 @@
 import { Product_Constant } from './Product.constant';
 import ProductModel from './Product.model';
+import { ProductInput } from './Product.validator';
 
 class Product_Service {
-  async createProduct(productData: any) {
+  async createProduct(productData: ProductInput) {
     try {
       const newProduct = await ProductModel.create(productData);
 
@@ -15,7 +16,7 @@ class Product_Service {
     }
   }
 
-  async updateProduct(id: string, updateData: any) {
+  async updateProduct(id: string, updateData: ProductInput) {
     try {
       const updatedProduct = await ProductModel.findByIdAndUpdate(
         id,

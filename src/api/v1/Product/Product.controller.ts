@@ -1,16 +1,21 @@
-import SendResponse from '../../../utils/SendResponse';
-import ProductService from './Product.service';
 import { Request, Response } from 'express';
-import { Product_Validator } from './Product.validator';
 import { ZodError } from 'zod';
 import StatusCode_Constant from '../../../constant/StatusCode.constant';
+import SendResponse from '../../../utils/SendResponse';
 import { Product_Constant } from './Product.constant';
+import ProductService from './Product.service';
 import ProductUtils from './Product.utils';
+import { Product_Validator } from './Product.validator';
 
 class Product_Controller {
   async createProduct(req: Request, res: Response): Promise<void> {
     try {
       const validatedData = Product_Validator.parse(req.body);
+
+      const Find_Product = await ProductUtils.findByName(validatedData.name);
+      if (Find_Product) {
+        throw new Error(Product_Constant.PRODUCT_ALREADY_EXISTS);
+      }
 
       const newProduct = await ProductService.createProduct(validatedData);
 

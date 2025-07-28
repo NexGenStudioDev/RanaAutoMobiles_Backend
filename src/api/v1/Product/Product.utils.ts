@@ -6,8 +6,13 @@ class ProductUtils {
     return await ProductModel.findById(id);
   }
 
+  async findByName(name: string): Promise<IProduct | null> {
+    return await ProductModel.findOne({ name });
+  }
+
   async searchByName(name: string): Promise<IProduct[]> {
-    const searchRegex = new RegExp(name, 'i');
+    const escapedName = name.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const searchRegex = new RegExp(escapedName, 'i');
     return await ProductModel.find({
       name: { $regex: searchRegex },
     });
@@ -18,12 +23,12 @@ class ProductUtils {
     limit: number = 10
   ): Promise<{ products: IProduct[]; total: number; totalPages: number }> {
     const skip = (page - 1) * limit;
-    const products = await ProductModel.find()
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit);
 
-    const total = await ProductModel.countDocuments();
+    const [products, total] = await Promise.all([
+      ProductModel.find().sort({ createdAt: -1 }).skip(skip).limit(limit).exec(),
+      ProductModel.countDocuments().exec(),
+    ]);
+
     const totalPages = Math.ceil(total / limit);
 
     return {
@@ -32,6 +37,8 @@ class ProductUtils {
       totalPages,
     };
   }
+
+
 }
 
 export default new ProductUtils();
