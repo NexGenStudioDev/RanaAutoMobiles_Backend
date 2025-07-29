@@ -69,7 +69,6 @@ class AuthController {
 
       AuthController.setTokenCookie(res, token);
 
-
       SendResponse.success(
         res,
         StatusCode_Constant.OK,

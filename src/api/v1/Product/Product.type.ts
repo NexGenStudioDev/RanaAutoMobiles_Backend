@@ -1,11 +1,12 @@
 export interface IProduct {
   name: string;
-  description: string;
+  description?: string;
   price: number;
-  model_No: string;
+  modelNumber?: string;
   discountPrice?: number;
   currency: string;
   inStock: boolean;
+  sap?: string | number;
   rating: {
     score: number;
     count: number;

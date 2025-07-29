@@ -13,7 +13,6 @@ class Category_Controller {
     try {
       const { name, description } = Category_Validator.parse(req.body);
 
-
       let Find_Category = await CategoryUtils.findByName(name);
       if (Find_Category) {
         throw new Error(Category_Constant.CATEGORY_ALREADY_EXISTS);
