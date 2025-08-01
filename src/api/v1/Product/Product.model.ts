@@ -23,6 +23,7 @@ const ProductSchema: Schema = new Schema<IProduct>(
     colors: [
       {
         name: { type: String, required: true }, // e.g., "Black"
+        price: { type: Number, required: true }, // Price for this color variant
         hex: { type: String, required: true }, // e.g., "#000000"
         images: [{ type: String }], // Images for that color
       },
